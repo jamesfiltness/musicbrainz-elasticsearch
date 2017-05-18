@@ -1,6 +1,6 @@
 # Musicbrainz Elasticsearch
 
-Use Logstash (jdbc plugin) to ingest data from the musicbrainz database in to Elasticsearch which is being used to power an autocomplete. Results are ranked by textual relevance and how popular they are.
+Use Logstash (jdbc plugin) to ingest artist data from the musicbrainz database in to Elasticsearch. Results are ranked by textual relevance and how popular they are.
 
 Musicbrainz Postgresql (VM) -> Logstash ([jdbc](https://www.elastic.co/blog/logstash-jdbc-input-plugin)) -> Elasticsearch.
 
