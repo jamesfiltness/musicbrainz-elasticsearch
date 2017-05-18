@@ -3,7 +3,7 @@
 Musicbrainz Postgresql (VM) -> Logstash ([jdbc](https://www.elastic.co/blog/logstash-jdbc-input-plugin)) -> Elasticsearch.
 
 Elasticsearch is great. Fulltext search + ranking by views:
-`curl -XPOST http://localhost:9200/some-index/_search -d '
+```curl -XPOST http://localhost:9200/some-index/_search -d '
 {
   "query": {
     "function_score": {
@@ -13,7 +13,7 @@ Elasticsearch is great. Fulltext search + ranking by views:
       }
     }
   }
-}'`
+}'```
 
 ## Logstash
 
@@ -29,7 +29,7 @@ cd to logstash and run:
 
 or specify custom shards/replicas config:
 
-`curl -XPUT 'localhost:9200/some-index?pretty' -H 'Content-Type: application/json' -d'
+```curl -XPUT 'localhost:9200/some-index?pretty' -H 'Content-Type: application/json' -d'
 {
     "settings" : {
         "index" : {
@@ -38,7 +38,7 @@ or specify custom shards/replicas config:
         }
     }
 }
-'`
+'```
 
 #### Delete an index:
 `curl -XDELETE 'localhost:9200/index-name?pretty'`
@@ -53,7 +53,7 @@ or specify custom shards/replicas config:
 `curl http://localhost:9200/index-name/_mapping/type-name?pretty`
 
 #### Put a mapping:
-`curl -XPUT 'http://localhost:9200/artists/artist/_mapping' -d '
+```curl -XPUT 'http://localhost:9200/artists/artist/_mapping' -d '
 {
     “{
         "properties" : {
@@ -61,7 +61,7 @@ or specify custom shards/replicas config:
         }
     }
 }
-'`
+'```
 
 #### Update some fields value (field properties live in the _source object by default)
 ```
