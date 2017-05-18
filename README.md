@@ -1,11 +1,10 @@
 # Musicbrainz Elasticsearch
 
-Use Logstash (jdbc plugin) to ingest data from the musicbrainz database and output in to Elasticsearch indexes. Results are ranked by textual relevance and how popular they are.
-
 Musicbrainz Postgresql (VM) -> Logstash ([jdbc](https://www.elastic.co/blog/logstash-jdbc-input-plugin)) -> Elasticsearch.
 
 Elasticsearch is great. Fulltext search + ranking by views:
-```curl -XPOST http://localhost:9200/some-index/_search -d '
+```
+curl -XPOST http://localhost:9200/some-index/_search -d '
 {
   "query": {
     "function_score": {
