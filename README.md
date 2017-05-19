@@ -20,6 +20,8 @@ curl -XPOST http://localhost:9200/artists/_search -d '
 
 ## Notes
 
+#### Run Logstash
+
 cd to logstash and run:
 
 `bin/logstash -f jdbc/musicbrainz.conf`
