@@ -2,7 +2,7 @@
 
 Musicbrainz Postgresql (VM) -> Logstash ([jdbc](https://www.elastic.co/blog/logstash-jdbc-input-plugin)) -> Elasticsearch.
 
-Autocomplete search results will be returned ranked bt textual relevance plus popularity:
+Autocomplete search results will be returned ranked by a combination of textual relevance and popularity:
 
 ```
 curl -XPOST http://localhost:9200/artists/_search -d '
