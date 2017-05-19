@@ -2,13 +2,14 @@
 
 Musicbrainz Postgresql (VM) -> Logstash ([jdbc](https://www.elastic.co/blog/logstash-jdbc-input-plugin)) -> Elasticsearch.
 
-Elasticsearch is great. Fulltext search + ranking by views:
+Autocomplete search results will be returned ranked bt textual relevance plus popularity:
+
 ```
-curl -XPOST http://localhost:9200/some-index/_search -d '
+curl -XPOST http://localhost:9200/artists/_search -d '
 {
   "query": {
     "function_score": {
-      "query": {"match": {"_all": "some-term"}},
+      "query": {"match": {"_all": "Soundgarden"}},
       "script_score": {
         "script": "_score * log(doc['views'].value + 1)"
       }
@@ -17,15 +18,13 @@ curl -XPOST http://localhost:9200/some-index/_search -d '
 }'
 ```
 
-## Logstash
+## Notes
 
 cd to logstash and run:
 
 `bin/logstash -f jdbc/musicbrainz.conf`
 
-## Elasticsearch REST chops
-
-#### Create an index:
+#### Create an Elasticsearch index:
 
 `curl -XPUT 'localhost:9200/index-name?pretty`
 
