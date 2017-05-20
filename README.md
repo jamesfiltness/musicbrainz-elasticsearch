@@ -9,9 +9,9 @@ curl -XPOST http://localhost:9200/artists/_search -d '
 {
   "query": {
     "function_score": {
-      "query": {"match": {"_all": "Soundgarden"}},
+      "query": {"match_phrase_prefix": {"name": "Radio"}},
       "script_score": {
-        "script": "_score * log(doc['views'].value + 1)"
+        "script": "_score * Math.log(doc['views'].value + 1)"
       }
     }
   }
