@@ -52,6 +52,9 @@ curl -XPUT 'localhost:9200/some-index?pretty' -d '
 #### List the first 100 records from an index:
 ` curl 'http://localhost:9200/index-name/_search?size=100&pretty'`
 
+#### Count all documents in index:
+`curl 'http://localhost:9200/artists/_count'`
+
 #### Get a record:
 `curl 'http://localhost:9200/index-name/type-name/some-id?pretty'`
 
