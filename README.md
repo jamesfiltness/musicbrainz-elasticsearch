@@ -33,7 +33,7 @@ cd to logstash and run:
 or specify custom shards/replicas config:
 
 ```
-curl -XPUT 'localhost:9200/some-index?pretty' -H 'Content-Type: application/json' -d'
+curl -XPUT 'localhost:9200/some-index?pretty' -H 'Content-Type: application/json' -d '
 {
     "settings" : {
         "index" : {
