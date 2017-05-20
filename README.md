@@ -28,7 +28,7 @@ cd to logstash and run:
 
 #### Create an Elasticsearch index:
 
-`curl -XPUT 'localhost:9200/index-name?pretty`
+`curl -XPUT 'localhost:9200/index-name?pretty'`
 
 or specify custom shards/replicas config:
 
@@ -72,8 +72,9 @@ curl -XPUT 'http://localhost:9200/artists/artist/_mapping' -d '
 
 #### Update some fields value (field properties live in the _source object by default)
 ```
-http://localhost:9200/index-name/type-name/some-id/_update
+curl -XPOST 'http://localhost:9200/artists/artist/a74b1b7f-71a5-4011-9441-d0b5e4122711/_update' -d '
 {
-   "script" : "ctx._source.some-integer-field+=1"
+   "script" : "ctx._source.views+=1"
 }
+'
 ```
