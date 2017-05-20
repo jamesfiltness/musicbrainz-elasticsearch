@@ -15,7 +15,8 @@ curl -XPOST http://localhost:9200/artists/_search -d '
       }
     }
   }
-}'
+}
+'
 ```
 
 ## Notes
