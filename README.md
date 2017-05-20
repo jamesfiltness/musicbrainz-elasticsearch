@@ -70,6 +70,17 @@ curl -XPUT 'http://localhost:9200/artists/artist/_mapping' -d '
 '
 ```
 
+#### Add some fields to add index:
+```
+curl -XPUT 'http://localhost:9200/artists/artist/6fd9967d-5836-475f-9936-8914fa72a82f' -d '
+{
+  "gid": "6fd9967d-5836-475f-9936-8914fa72a82f",
+  "name": "Elliot Smith",
+  "views": 1
+}
+'
+```
+
 #### Update some fields value (field properties live in the _source object by default)
 ```
 curl -XPOST 'http://localhost:9200/artists/artist/a74b1b7f-71a5-4011-9441-d0b5e4122711/_update' -d '
