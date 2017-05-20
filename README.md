@@ -5,7 +5,7 @@ Musicbrainz Postgresql (VM) -> Logstash ([jdbc](https://www.elastic.co/blog/logs
 Autocomplete search results will be returned ranked by a combination of textual relevance and popularity:
 
 ```
-curl -XPOST http://localhost:9200/artists/_search -d '
+curl -XPOST 'http://localhost:9200/artists/_search' -d '
 {
   "query": {
     "function_score": {
@@ -34,7 +34,7 @@ cd to logstash and run:
 or specify custom shards/replicas config:
 
 ```
-curl -XPUT 'localhost:9200/some-index?pretty' -H 'Content-Type: application/json' -d '
+curl -XPUT 'localhost:9200/some-index?pretty' -d '
 {
     "settings" : {
         "index" : {
@@ -50,13 +50,13 @@ curl -XPUT 'localhost:9200/some-index?pretty' -H 'Content-Type: application/json
 `curl -XDELETE 'localhost:9200/index-name?pretty'`
 
 #### List the first 100 records from an index:
-` curl http://localhost:9200/index-name/_search?size=100&pretty`
+` curl 'http://localhost:9200/index-name/_search?size=100&pretty'`
 
 #### Get a record:
-`curl http://localhost:9200/index-name/type-name/some-id?pretty`
+`curl 'http://localhost:9200/index-name/type-name/some-id?pretty'`
 
 #### Get a mapping:
-`curl http://localhost:9200/index-name/_mapping/type-name?pretty`
+`curl 'http://localhost:9200/index-name/_mapping/type-name?pretty'`
 
 #### Put a mapping:
 ```
