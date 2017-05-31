@@ -1,6 +1,6 @@
 # Musicbrainz Elasticsearch
 
-An autocomplete built using elasticsearch, powered by data from [Musicbrainz](http://musicbrainz.org/).
+An autocomplete built using Elasticsearch, powered by data from [Musicbrainz](http://musicbrainz.org/).
 
 Musicbrainz Postgresql (VM) -> Logstash ([jdbc](https://www.elastic.co/blog/logstash-jdbc-input-plugin)) -> Elasticsearch.
 
