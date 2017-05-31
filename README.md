@@ -1,5 +1,7 @@
 # Musicbrainz Elasticsearch
 
+An autocomplete built using elasticsearch, powered by data from [Musicbrainz](http://musicbrainz.org/). This repo exists to store any configuration files for logstash and elasticsearch and also as somewhere to store notes on the relevant parts of the ELK stack as I learn.
+
 Musicbrainz Postgresql (VM) -> Logstash ([jdbc](https://www.elastic.co/blog/logstash-jdbc-input-plugin)) -> Elasticsearch.
 
 Autocomplete search results will be returned ranked by a combination of textual relevance and popularity:
