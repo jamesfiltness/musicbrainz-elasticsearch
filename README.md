@@ -23,6 +23,12 @@ curl -XPOST 'http://localhost:9200/artists/_search' -d '
 
 ## Notes
 
+#### Start Elasticsearch
+
+cd to Elasticsearch and run: 
+
+`./bin/elasticsearch`
+
 #### Run Logstash
 
 cd to logstash and run:
