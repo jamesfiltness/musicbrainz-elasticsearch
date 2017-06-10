@@ -31,7 +31,6 @@ class App extends Component {
     })
       .then((res) => {
         return res.json();
-        // this.setState({ data: response });
       })
       .then((data) => {
         this.setState({ data: data.hits.hits });
