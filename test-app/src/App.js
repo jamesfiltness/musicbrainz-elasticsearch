@@ -6,7 +6,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      data: {},
+      data: [],
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -14,24 +14,27 @@ class App extends Component {
 
   handleChange(e) {
     const postData = JSON.stringify({
-      "query": {
+     "query": {
         "function_score": {
-          "query": {"match_phrase": {"name": e.target.value}},
+          "query": {"regexp": {"name": e.target.value + ".+" }},
           "script_score": {
             "script": "_score * Math.log(doc['views'].value + 1)"
-          },
-        },
-      },
-      "size": 3
+          }
+        }
+     },
+     "size": 3,
     });
 
     fetch('http://localhost:9200/artists/_search', {
       method: "POST",
       body: postData
     })
-      .then((response) => {
-        console.log(response.json());
-        this.setState({ data: response });
+      .then((res) => {
+        return res.json();
+        // this.setState({ data: response });
+      })
+      .then((data) => {
+        this.setState({ data: data.hits.hits });
       })
       .catch((e) => {
         console.log('Error: ', e);
@@ -42,6 +45,9 @@ class App extends Component {
     return (
       <div className="App">
         <input onChange={this.handleChange} />
+        {this.state.data.map((item, i) =>
+        <li key={i}>{item['_source'].name}</li>
+        )}
       </div>
     );
   }
