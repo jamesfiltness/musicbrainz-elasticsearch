@@ -16,10 +16,17 @@ class App extends Component {
     const postData = JSON.stringify({
      "query": {
         "function_score": {
-          "query": {"regexp": {"name": e.target.value + ".+" }},
+          "query": {
+            "match": {
+              "name": {
+                "query": e.target.value,
+                "analyzer": "standard"
+              }
+            }
+          },
           "script_score": {
             "script": "_score * Math.log(doc['views'].value + 1)"
-          }
+          },
         }
      },
      "size": 3,
