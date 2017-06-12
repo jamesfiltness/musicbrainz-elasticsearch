@@ -4,6 +4,8 @@ An autocomplete built using Elasticsearch, powered by data from [Musicbrainz](ht
 
 Musicbrainz Postgresql (VM) -> Logstash ([jdbc](https://www.elastic.co/blog/logstash-jdbc-input-plugin)) -> Elasticsearch.
 
+The data is indexed using a custom Autocomplete analyzer. https://www.elastic.co/guide/en/elasticsearch/guide/current/_index_time_search_as_you_type.html
+
 Autocomplete search results will be returned ranked by a combination of textual relevance and popularity:
 
 ```
@@ -11,7 +13,14 @@ curl -XPOST 'http://localhost:9200/artists/_search' -d '
 {
   "query": {
     "function_score": {
-      "query": {"match_phrase_prefix": {"name": "Radio"}},
+      "query": {
+        "match": {
+          "name": {
+            "query": e.target.value, 
+            "analyzer": "standard" 
+          }
+        }
+      },
       "script_score": {
         "script": "_score * Math.log(doc['views'].value + 1)"
       }
