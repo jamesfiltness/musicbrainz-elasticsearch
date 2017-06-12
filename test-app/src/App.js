@@ -17,7 +17,7 @@ class App extends Component {
      "query": {
         "function_score": {
           "query": {
-            "match_phrase_prefix": {
+            "match_phrase": {
               "name": {
                 "query": e.target.value,
                 "analyzer": "standard"
