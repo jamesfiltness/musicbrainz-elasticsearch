@@ -17,7 +17,7 @@ class App extends Component {
      "query": {
         "function_score": {
           "query": {
-            "match": {
+            "match_phrase_prefix": {
               "name": {
                 "query": e.target.value,
                 "analyzer": "standard"
@@ -48,12 +48,23 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.data);
     return (
       <div className="App">
         <input onChange={this.handleChange} />
-        {this.state.data.map((item, i) =>
-        <li key={i}>{item['_source'].name}</li>
-        )}
+        {
+          this.state.data.map((item, i) => {
+            if(item['_score'] > 0) {
+            const link = `http://localhost:8900/artist/${item['_source'].gid}`;
+              return (
+              <li key={i}>
+                <a target="_blank" href={link}>
+                  {item['_source'].name}</a></li>
+              );
+              }
+              return null
+          })
+        }
       </div>
     );
   }
