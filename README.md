@@ -4,7 +4,57 @@ An autocomplete built using Elasticsearch, powered by data from [Musicbrainz](ht
 
 Musicbrainz Postgresql (VM) -> Logstash ([jdbc](https://www.elastic.co/blog/logstash-jdbc-input-plugin)) -> Elasticsearch.
 
-The data is indexed using a custom Autocomplete analyzer. https://www.elastic.co/guide/en/elasticsearch/guide/current/_index_time_search_as_you_type.html
+The data is indexed using a custom Autocomplete analyzer:
+
+1. Set up the analyzer
+```
+curl -XPUT 'localhost:9200/artists?pretty' -d '
+{
+    "settings": {
+        "number_of_shards": 1,
+        "analysis": {
+            "filter": {
+                "autocomplete_filter": {
+                    "type":     "edge_ngram",
+                    "min_gram": 1,
+                    "max_gram": 20
+                }
+            },
+            "analyzer": {
+                "autocomplete": {
+                    "type":      "custom",
+                    "tokenizer": "standard",
+                    "filter": [
+                        "lowercase",
+                        "autocomplete_filter"
+                    ]
+                }
+            }
+        }
+    }
+}
+'
+```
+
+2. Alter the index mapping to use the analyzer:
+
+```
+curl -XPUT 'localhost:9200/artists/_mapping/artist' -d '
+{
+    "artist": {
+        "properties": {
+            "name": {
+                "type":     "string",
+                "analyzer": "autocomplete",
+                "search_analyzer": "standard"
+            }
+        }
+    }
+}
+'
+```
+
+https://www.elastic.co/guide/en/elasticsearch/guide/current/_index_time_search_as_you_type.html
 
 Autocomplete search results will be returned ranked by a combination of textual relevance and popularity:
 
