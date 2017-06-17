@@ -4,7 +4,7 @@ An autocomplete built using Elasticsearch, powered by data from [Musicbrainz](ht
 
 Musicbrainz Postgresql (VM) -> Logstash ([jdbc](https://www.elastic.co/blog/logstash-jdbc-input-plugin)) -> Elasticsearch.
 
-The data is indexed using a custom Autocomplete analyzer:
+The data is indexed using a custom Autocomplete analyzer (https://www.elastic.co/guide/en/elasticsearch/guide/current/_index_time_search_as_you_type.html):
 
 1. Set up the analyzer
 ```
@@ -53,8 +53,6 @@ curl -XPUT 'localhost:9200/artists/_mapping/artist' -d '
 }
 '
 ```
-
-https://www.elastic.co/guide/en/elasticsearch/guide/current/_index_time_search_as_you_type.html
 
 Autocomplete search results will be returned ranked by a combination of textual relevance and popularity:
 
