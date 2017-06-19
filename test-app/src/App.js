@@ -6,7 +6,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      data: [],
+      artistData: [],
+      releaseData: [],
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -17,7 +18,7 @@ class App extends Component {
      "query": {
         "function_score": {
           "query": {
-            "match_phrase": {
+            "match_phrase_prefix": {
               "name": {
                 "query": e.target.value,
                 "analyzer": "standard"
@@ -40,7 +41,22 @@ class App extends Component {
         return res.json();
       })
       .then((data) => {
-        this.setState({ data: data.hits.hits });
+        this.setState({ artistData: data.hits.hits });
+      })
+      .catch((e) => {
+        console.log('Error: ', e);
+      })
+
+
+    fetch('http://localhost:9200/releases/_search', {
+      method: "POST",
+      body: postData
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        this.setState({ releaseData: data.hits.hits });
       })
       .catch((e) => {
         console.log('Error: ', e);
@@ -48,23 +64,42 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.data);
+    console.log('artists', this.state.artistData);
+    console.log('releases', this.state.releaseData);
     return (
       <div className="App">
         <input onChange={this.handleChange} />
-        {
-          this.state.data.map((item, i) => {
-            if(item['_score'] > 0) {
-            const link = `http://localhost:8900/artist/${item['_source'].gid}`;
-              return (
-              <li key={i}>
-                <a target="_blank" href={link}>
-                  {item['_source'].name}</a></li>
-              );
+        <ul>
+          {
+            this.state.artistData.map((item, i) => {
+              if(item['_score'] > 0) {
+              const link = `http://localhost:8900/artist/${item['_source'].gid}`;
+                return (
+                <li key={i}>
+                  <a target="_blank" href={link}>
+                    {item['_source'].name}</a></li>
+                );
+                }
+                return null
+            })
+            }
+          </ul>
+
+          <ul>
+            {
+              this.state.releaseData.map((item, i) => {
+                if(item['_score'] > 0) {
+                const link = `http://localhost:8900/album/${item['_source'].gid}`;
+                  return (
+                  <li key={i}>
+                    <a target="_blank" href={link}>
+                      {item['_source'].name}</a></li>
+                  );
+                  }
+                  return null
+              })
               }
-              return null
-          })
-        }
+          </ul>
       </div>
     );
   }
